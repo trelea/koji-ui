@@ -10,10 +10,3 @@ export const registerSchema = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().min(8).max(24).required(),
 });
-
-export const otpSchema = yup.object().shape({
-  otp: yup
-    .string()
-    .matches(/^\d+$/, "OTP must contain only numbers")
-    .required(),
-});

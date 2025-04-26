@@ -1,10 +1,10 @@
-import { useVerifyOtpTokenQuery } from "@/features/auth/api";
 import { useQueryState } from "nuqs";
 import React from "react";
 import { toast } from "sonner";
+import { useVerifyOtpTokenQuery } from "../api";
 
 export const useCheckOtpUrlToken = () => {
-  const [token, setToken] = useQueryState("_otp_access_token");
+  const [token] = useQueryState("_otp_access_token");
   const { error, isError, isLoading, isFetching } = useVerifyOtpTokenQuery(
     token as string,
     { skip: !token }
@@ -12,7 +12,6 @@ export const useCheckOtpUrlToken = () => {
 
   React.useEffect(() => {
     if (error || isError) {
-      setToken(null);
       toast("An Error Occurred", {
         description: error?.message,
         action: {

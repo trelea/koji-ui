@@ -21,12 +21,16 @@ export const useSubmitOtp = () => {
   ) => {
     const response = await mutate({ body: data, query: { _tkn } });
 
-    if (response.error)
-      return deserializeRtkQueryError<{ message: string }>(response.error, {
-        toasts: [(err) => err.data.message, (err) => err.message],
-      });
-
-    if (response.data) redirect("/a/l");
+    if (response.error) {
+      const { status } = deserializeRtkQueryError<{ message: string }>(
+        response.error,
+        {
+          toasts: [(err) => err.data.message, (err) => err.message],
+        }
+      );
+      if (status === 428) redirect("/a/s");
+      return;
+    }
   };
 
   return { form, onSubmit, isError, isLoading, isSuccess, isUninitialized };

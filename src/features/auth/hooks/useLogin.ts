@@ -22,10 +22,18 @@ export const useLogin = () => {
   const onSubmit = async (data: yup.InferType<typeof loginSchema>) => {
     const response = await mutate(data);
 
-    if (response.error)
-      return deserializeRtkQueryError<{ message: string }>(response.error, {
-        toasts: [(err) => err.data.message, (err) => err.message],
-      });
+    if (response.error) {
+      const { status } = deserializeRtkQueryError<{ message: string }>(
+        response.error,
+        {
+          toasts: [(err) => err.data.message, (err) => err.message],
+        }
+      );
+
+      if (status === 428) redirect("/a/s", { replace: true });
+
+      return;
+    }
 
     dispatch(authUser(response.data));
     redirect("/c", { replace: true });

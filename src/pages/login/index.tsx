@@ -12,7 +12,7 @@ import { Link } from "react-router";
 
 interface Props {}
 
-export const Login: React.FC<Props> = () => {
+export const Login: React.FC<Props> = ({}) => {
   return (
     <main className="h-screen w-screen flex justify-center items-center">
       <Card className="w-md">

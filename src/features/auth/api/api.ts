@@ -4,10 +4,6 @@ import {
   LoginResponseType,
   RegisterRequestType,
   RegisterResponseType,
-  VerifyOtpCodeRequestType,
-  VerifyOtpCodeResponseType,
-  VerifyOtpTokenRequestType,
-  VerifyOtpTokenResponseType,
 } from "../types";
 
 export const authApi = baseApi.injectEndpoints({
@@ -33,43 +29,7 @@ export const authApi = baseApi.injectEndpoints({
         data,
       }),
     }),
-    /**
-     * verify otp token
-     */
-    verifyOtpToken: builder.query<
-      VerifyOtpTokenResponseType,
-      VerifyOtpTokenRequestType
-    >({
-      query: (token) => ({
-        url: "/otp/verify",
-        method: "GET",
-        params: {
-          _tkn: token,
-        },
-      }),
-    }),
-    /**
-     * verify otp code
-     */
-    verifyOtpCode: builder.mutation<
-      VerifyOtpCodeResponseType,
-      VerifyOtpCodeRequestType
-    >({
-      query: ({ body, query: { _tkn } }) => ({
-        url: `/otp/verify`,
-        method: "POST",
-        data: body,
-        params: {
-          _tkn,
-        },
-      }),
-    }),
   }),
 });
 
-export const {
-  useLoginMutation,
-  useRegisterMutation,
-  useVerifyOtpTokenQuery,
-  useVerifyOtpCodeMutation,
-} = authApi;
+export const { useLoginMutation, useRegisterMutation } = authApi;
